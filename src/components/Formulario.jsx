@@ -1,18 +1,57 @@
 import React from 'react'
-import {Formik, Form, Field} from 'formik'
+import {Formik, Form, Field,ErrorMessage} from 'formik'
+import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+
 function Formulario() {
+
+    const navigate = useNavigate()
+
+    const handleSubmit = async (values) => {
+       try{
+            const url = 'http://localhost:4000/clientes'
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(values),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            console.log(response);
+            navigate('/clientes')
+       }catch (error){
+              console.log('error')
+       }
+    }
+    
+    const nuevoClienteSchema = Yup.object().shape({
+            nombre: Yup.string().min(3,"El nombre es muy corto").max(20, 'El nombre es muy largo').required('El nombre es requerido'),
+            empresa: Yup.string().min(3,"El nombre es muy corto").max(20, 'El nombre de la empresa es muy largo').required('El nombre de la empresa es requerido'),
+            email: Yup.string().email('Email no valido').required('El email de la empresa es requerido'),
+            telefono: Yup.number().integer('Numero no valido').positive('Numero no valido').typeError('El telefono debe ser un numero').required('El telefono es requerido')
+            
+    })
+
   return (
     <div className=' bg-white mt-10 px-5 py-10 rounded-md shadow-md md:w-3/4 mx-auto'>
         <h1 className=' font-bold text-xl text-gray-600 uppercase text-center'>Agregar Cliente</h1>
         <Formik
         initialValues={{
             nombre: '',
-            apellido: '',
             empresa: '',
             email: '',
             telefono: '',
             notas: ''
-        }}>
+        }}
+        validationSchema={nuevoClienteSchema}
+        onSubmit={ async (values, {resetForm}) =>{
+            await handleSubmit(values)
+            resetForm()
+        }}
+        >
+            {({errors}) => {
+                
+                return(
             <Form className='mt-10'>
                 <div className=' mb-4'>
                     <label className=' text-gray-800 ' htmlFor='nombre'>Nombre:</label>
@@ -20,6 +59,7 @@ function Formulario() {
                     id='nombre'
                     name='nombre'
                     className=' mt-2 block w-full p-3 bg-gray-50' placeholder='Nombre del Cliente' ></Field>
+                    <ErrorMessage name='nombre' component='div' className='my-4 text-white p-3 font-bold  bg-red-600 uppercase'></ErrorMessage>
                 </div>
                 <div className=' mb-4'>
                     <label className=' text-gray-800 ' htmlFor='empresa'>Empresa:</label>
@@ -27,6 +67,7 @@ function Formulario() {
                     id='empresa'
                     name='empresa'
                     className=' mt-2 block w-full p-3 bg-gray-50' placeholder='Empresa del Cliente' ></Field>
+                    <ErrorMessage name='empresa' component='div' className='my-4 text-white p-3 font-bold  bg-red-600 uppercase'></ErrorMessage>
                 </div>
                 <div className=' mb-4'>
                     <label className=' text-gray-800 ' htmlFor='email'>Email:</label>
@@ -34,6 +75,7 @@ function Formulario() {
                     id='email'
                     name='email'
                     className=' mt-2 block w-full p-3 bg-gray-50' placeholder='Email del Cliente' ></Field>
+                    <ErrorMessage name='email' component='div' className='my-4 text-white p-3 font-bold  bg-red-600 uppercase'></ErrorMessage>
                 </div>
                 <div className=' mb-4'>
                     <label className=' text-gray-800 ' htmlFor='tel'>Teléfono:</label>
@@ -41,6 +83,7 @@ function Formulario() {
                     id='tel'
                     name='telefono'
                     className=' mt-2 block w-full p-3 bg-gray-50' placeholder='Teléfono del Cliente' ></Field>
+                    <ErrorMessage name='telefono' component='div' className='my-4 text-white p-3 font-bold  bg-red-600 uppercase'></ErrorMessage>
                 </div>
                 <div className=' mb-4'>
                     <label className=' text-gray-800 ' htmlFor='notas'>Notas:</label>
@@ -53,10 +96,11 @@ function Formulario() {
                 <input 
                 type='submit'
                 value='Agregar Cliente'
-                className='mt-5 w-full bg-blue-800 p-3 text-white uppercase font-bold text-lg'>
+                className='mt-5 w-full bg-blue-800 p-3 text-white uppercase font-bold text-lg cursor-pointer'>
                 </input>
                 
-            </Form>       
+            </Form>  
+            )}}     
         </Formik>
     </div>
   )

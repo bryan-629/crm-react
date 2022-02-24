@@ -1,0 +1,20 @@
+{
+  "clientes": [
+    {
+      "nombre": "Nyne",
+      "empresa": "Nyne dev",
+      "email": "nyne@nyne.com",
+      "telefono": "523412132",
+      "notas": "empresa de dev de nyne",
+      "id": 1
+    },
+    {
+      "nombre": "transporte",
+      "empresa": "sdfgsdfg",
+      "email": "cruzbryan629@gmail.com",
+      "telefono": "600786211",
+      "notas": "",
+      "id": 2
+    }
+  ]
+}

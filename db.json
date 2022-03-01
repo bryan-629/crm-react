@@ -4,17 +4,17 @@
       "nombre": "Nyne",
       "empresa": "Nyne dev",
       "email": "nyne@nyne.com",
-      "telefono": "523412132",
+      "telefono": "523412131",
       "notas": "empresa de dev de nyne",
       "id": 1
     },
     {
-      "nombre": "transporte",
-      "empresa": "sdfgsdfg",
-      "email": "cruzbryan629@gmail.com",
-      "telefono": "600786211",
-      "notas": "",
-      "id": 2
+      "nombre": "Edgar actualizado",
+      "empresa": "Codigo con juan",
+      "email": "Correo@correo.com",
+      "telefono": "23452345",
+      "notas": "Solicita servidor",
+      "id": 3
     }
   ]
 }

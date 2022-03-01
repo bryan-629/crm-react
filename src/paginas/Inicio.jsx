@@ -6,6 +6,24 @@ function Inicio() {
 
     const [clientes, setClientes] = useState([]);
 
+    const handleEliminar = async (id) =>{
+      const confirmar = confirm('¿Deseas eliminar este cliente?')
+        if(confirmar){
+          try{
+            const url = `http://localhost:4000/clientes/${id}`
+            const response = await fetch(url, {
+              method: 'DELETE'
+            })
+            await response.json();
+            const arrayClientes = clientes.filter( cliente => cliente.id !== id)
+            setClientes(arrayClientes)
+          }catch(err){
+
+          }
+        }
+
+    }
+
   useEffect(() =>{
     const obtenerClientesAPI = async () => {
       try{
@@ -37,6 +55,7 @@ function Inicio() {
           <Cliente
           key={cliente.id}
           cliente={cliente}
+          handleEliminar={handleEliminar}
           ></Cliente>
               
             ))}

@@ -10,7 +10,7 @@ function VerCliente() {
     useEffect(() => {
         setCargando(!cargando)
         const obterClienteApi = async () => {
-        const response = await fetch(`http://localhost:4000/clientes/${params.id}`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/${params.id}`)
         const clientes = await response.json()
         console.log(clientes)
         setCliente(clientes)
